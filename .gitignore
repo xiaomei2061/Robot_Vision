@@ -1,0 +1,24 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyd
+.venv/
+venv/
+
+# ---- 图片 / 视频 / 模型权重大：不要传上 GitHub ----
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.mp4
+*.avi
+*.mov
+*.npy
+*.onnx
+*.pt
+*.engine
+
+# ---- 系统与编辑器的自动生成文件 ----
+.DS_Store
+Thumbs.db
+desktop.ini
