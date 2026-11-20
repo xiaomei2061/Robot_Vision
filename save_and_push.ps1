@@ -57,9 +57,17 @@ if ($LASTEXITCODE -ne 0) {
     exit 0
 }
 
-# ---- 6. 上传 ----
-Write-Host '[2/2] 正在上传到 GitHub……'
-& $git push
+# ---- 6. 上传（第一次会自动建立跟踪关系） ----
+$branch = (& $git rev-parse --abbrev-ref HEAD).Trim()
+& $git rev-parse --abbrev-ref --symbolic-full-name '@{u}' *> $null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[2/2] 第一次上传，正在把 $branch 分支连接到 GitHub……"
+    & $git push -u origin $branch
+} else {
+    Write-Host '[2/2] 正在上传到 GitHub……'
+    & $git push
+}
+
 if ($LASTEXITCODE -eq 0) {
     Write-Host ''
     Write-Host '上传成功！代码已经在 GitHub 上了。' -ForegroundColor Green
@@ -68,4 +76,5 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host '上传失败。常见原因：' -ForegroundColor Red
     Write-Host '  1) 没登录 GitHub —— 见 README.md「常见问题」第 1 条'
     Write-Host '  2) 网络问题 —— 过一会儿再双击一次这个脚本'
+    exit 1
 }
