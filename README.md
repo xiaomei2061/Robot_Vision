@@ -95,7 +95,25 @@ VS Code 终端里跑一次 `& "D:\git\Git\cmd\git.exe" push`，看完整报错�
 线上有你本地没有的东西（通常是建仓库时勾了 README）。最简单的解决办法：
 把 GitHub 上的仓库删掉，按第 2 节第 1 步重新建一个**空**的。
 
-**5）提交记录里作者名字不对**
+**5）VS Code 终端下拉里没有「Git Bash」，或者点了打不开**
+原因：VS Code 靠注册表 `HKLM\SOFTWARE\GitForWindows\InstallPath` 去自动发现 Git Bash，
+而那一项还写着老路径 `D:\新建文件夹 (6)\Git`（文件夹已经被移走了）。
+解决：已经在用户设置里显式写死了 Git Bash 的完整路径，不用管注册表了：
+
+```json
+"terminal.integrated.profiles.windows": {
+    "Git Bash": {
+        "path": "D:\\git\\Git\\bin\\bash.exe",
+        "args": ["--login", "-i"],
+        "icon": "terminal-bash"
+    }
+},
+"terminal.integrated.defaultProfile.windows": "Git Bash"
+```
+
+改完要 **关掉所有终端标签页**（点终端右上角的垃圾桶 x），再点 `+` 新建，才会用新配置。
+
+**6）提交记录里作者名字不对**
 在仓库目录跑：
 ```powershell
 & "D:\git\Git\cmd\git.exe" config user.name "xiaomei2061"
